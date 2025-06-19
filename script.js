@@ -1,3 +1,5 @@
+const start=document.querySelector("#start");
+start.addEventListener("click",playgame);
 function getComputerChoice()
 {
  let choice=Math.floor(Math.random()*3);
@@ -14,85 +16,117 @@ function getComputerChoice()
     return "scissors";
  }
 }
-function getHumanChoice()
-{
-   let input = prompt("Choose rock,paper or scissors","");
-   if(input.toLowerCase()=="rock")
-   {
-    return "rock";
-   }
-   else if(input.toLowerCase()=="paper")
-   {
-    return "paper";
-   }
-   else
-   {
-    return "scissors";
-   }
-}
+
 let playerScore=0;
 let ComputerScore=0;
 
 function playRound(playerChoice,ComputerChoice)
 {
+   
+   const score=document.querySelector(".score");
+   const currentResult=document.querySelector(".current-result");
+   const container=document.querySelector(".container");
     if(playerChoice == ComputerChoice)
     {
-        alert("Draw");
-    }
-    else{
-     if(playerChoice=="rock"&&ComputerChoice=="scissors")
-     {
-        playerScore++;
-        alert(`You win ${playerChoice} beats ${ComputerChoice}`);
-     }
-      else if(playerChoice=="rock"&&ComputerChoice=="paper")
-     {
-        ComputerScore++;
-        alert(`You lose ${ComputerChoice} beats ${playerChoice}`);
-     }
-     else if(playerChoice=="paper"&&ComputerChoice=="rock")
-     {
-        playerScore++;
-        alert(`You win ${playerChoice} beats ${ComputerChoice}`);
-     }
-     else if(playerChoice=="paper"&&ComputerChoice=="scissors")
-     {
-        ComputerScore++;
-        alert(`You lose ${ComputerChoice} beats ${playerChoice}`);
-     }
-     else if(playerChoice=="scissors"&&ComputerChoice=="paper")
-     {
-        playerScore++;
-        alert(`You win ${playerChoice} beats ${ComputerChoice}`);
-     }
-      else{
-        ComputerScore++;
-        alert(`You lose ${ComputerChoice} beats ${playerChoice}`);
-      }
-    }
- }
-    
- 
- function playgame()
- {
-    for(let i=0;i<5;i++)
-    {
-        let playerChoice=getHumanChoice();
-        let computerChoice=getComputerChoice();
-        playRound(playerChoice,computerChoice);
-    }
-    if(playerScore>ComputerScore)
-    {
-        alert("You won the game");
-    }
-    else if(playerScore<ComputerScore)
-    {
-        alert("You lost the game");
+        score.textContent=`Player Score:${playerScore} Computer Score:${ComputerScore}`;
+        currentResult.textContent=`Player Choice:${playerChoice} Computer Choice:${ComputerChoice}`;
     }
     else
     {
-        alert("Draw");
-    }
- }
+     if(playerChoice=="rock"&&ComputerChoice=="scissors")
+     {
+        playerScore++;
+        score.textContent=`Player Score:${playerScore} Computer Score:${ComputerScore}`;
+        currentResult.textContent=`Player Choice:${playerChoice} Computer Choice:${ComputerChoice}`;  
+     }
+     
+     else if(playerChoice=="paper"&&ComputerChoice=="rock")
+     {
+        playerScore++;
+        score.textContent=`Player Score:${playerScore} Computer Score:${ComputerScore}`;
+        currentResult.textContent=`Player Choice:${playerChoice} Computer Choice:${ComputerChoice}`;
+     }
 
- playgame();
+     else if(playerChoice=="scissors"&&ComputerChoice=="paper")
+     {
+        playerScore++;
+        score.textContent=`Player Score:${playerScore} Computer Score:${ComputerScore}`;
+        currentResult.textContent=`Player Choice:${playerChoice} Computer Choice:${ComputerChoice}`;
+     }
+
+     else
+     {
+        ComputerScore++;
+        score.textContent=`Player Score:${playerScore} Computer Score:${ComputerScore}`;
+        currentResult.textContent=`Player Choice:${playerChoice} Computer Choice:${ComputerChoice}`;
+     }
+    }
+   container.appendChild(score);
+   container.appendChild(currentResult);
+   if(cnt==5)
+   {
+    const para=document.createElement("p");
+    const result=document.querySelector(".result");
+    if(playerScore>ComputerScore)
+    {
+        para.textContent="You won the game";
+
+    }
+    else if(playerScore<ComputerScore)
+    {
+        para.textContent="You lost the game";
+    }
+    else if(playerScore==ComputerScore)
+    {
+        para.textContent="IT'S A TIE";
+    }
+    result.appendChild(para);
+   }
+   
+ }
+    let cnt=0;
+ 
+ function playgame()
+   {    
+      if(cnt>5)
+      {
+         alert("Game finished press on restart to restart the game");
+      }
+     const btn1=document.querySelector("#rock");
+     btn1.addEventListener("click",()=>{
+      cnt++;
+      if(cnt<=5)
+      playRound("rock",getComputerChoice());
+     });
+     const btn2=document.querySelector("#paper");
+     btn2.addEventListener("click",()=>{
+      cnt++;
+      if(cnt<=5)
+      playRound("paper",getComputerChoice());
+     });
+     const btn3=document.querySelector("#scissors");
+     btn3.addEventListener("click",()=>{
+      cnt++;
+      if(cnt<=5)
+      playRound("scissors",getComputerChoice());
+     });
+   }
+
+   function restart()
+   {
+     window.location.reload();
+   }
+   const result=document.querySelector(".result");
+   const rest=document.createElement("button");
+   rest.textContent="Restart";
+   result.appendChild(rest);
+  rest.addEventListener("click",restart);
+
+    
+ 
+
+ 
+
+
+
+ 
